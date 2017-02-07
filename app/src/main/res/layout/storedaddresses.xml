@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffff">
+<ListView
+    android:layout_width="match_parent"
+    android:layout_height="350dp"
+    android:scrollbars="vertical"
+    android:fastScrollEnabled="true"
+    android:id="@+id/list"
+    />
+
+    <TextView
+        android:text="Please Note :- To delete the locations stored, long press on map in the home tab."
+        android:layout_marginTop="400dp"
+        android:layout_gravity="bottom"
+        android:textStyle="normal"
+        android:textSize="18dp"
+        android:layout_width="match_parent"
+        android:layout_height="145dp"
+        android:id="@+id/text0" />
+</RelativeLayout>

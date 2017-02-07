@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#ffff"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/Sms_Tracker">
+
+
+    <Button
+        android:id="@+id/regen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="260dp"
+        android:text="Regenerate Key"
+        android:theme="@style/SubmitButton"
+        android:textColor="#ffff"
+        android:layout_gravity="center_horizontal|top" />
+
+    <TextView
+        android:text="Your Message Key:"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:textStyle="italic"
+        android:textSize="20dp"
+        android:layout_width="187dp"
+        android:layout_height="38dp"
+        android:id="@+id/text" />
+
+    <TextView
+        android:text="Message Key"
+        android:layout_marginTop="130dp"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:layout_width="187dp"
+        android:layout_height="38dp"
+        android:id="@+id/messagekey" />
+
+    <TextView
+        android:text="Please Note :- All the people who send you this message key in the form of text message will receive your location updates. It is advised to keep changing this key timely."
+        android:layout_marginTop="350dp"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="normal"
+        android:textSize="18dp"
+        android:layout_width="match_parent"
+        android:layout_height="145dp"
+        android:id="@+id/text0" />
+
+</FrameLayout>
