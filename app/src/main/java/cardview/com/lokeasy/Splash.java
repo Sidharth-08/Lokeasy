@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
@@ -49,6 +50,11 @@ LocationManager lm;
         }
         lm = (LocationManager)getSystemService(LOCATION_SERVICE);
 
+        IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        filter.addAction(Intent.ACTION_USER_PRESENT);
+        PowerReceiver powerReceiver = new PowerReceiver();
+        registerReceiver(powerReceiver, filter);
 
         Intent intent=new Intent(getApplicationContext(),MainActivity.class);
         startActivity(intent);

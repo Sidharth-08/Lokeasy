@@ -172,7 +172,7 @@ if(loc!=null) {
             SmsManager sms = SmsManager.getDefault();
             String num=c.getString(c.getColumnIndex(EmergencyContact.NUMBER));
 
-            sms.sendTextMessage(num, null, "I am in an Emergency,Please contact me immediatly !!   The person is at "+yourAddress+" "+yourCity+" "+yourCountry, null, null);
+            sms.sendTextMessage(num, null, "I am in an Emergency,Please contact me immediatly !!   I am at "+yourAddress+" "+yourCity+" "+yourCountry, null, null);
 
 
 
