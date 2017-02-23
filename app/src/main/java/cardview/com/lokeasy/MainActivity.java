@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -68,9 +69,11 @@ public class MainActivity extends AppCompatActivity
     LatLng latLng;
     double lat = 0;
     double lng = 0;
+    PowerReceiver powerReceiver;
     Location location;
     double latnew = 0;
     double lonnew =0;
+
     boolean[] marker ;
     private boolean showLevelPicker = true;
     private AudioManager maudio, mmaudio;
@@ -87,7 +90,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
-        MainActivity.this.startService(new Intent(MainActivity.this, LockService.class));
+       // MainActivity.this.startService(new Intent(MainActivity.this, LockService.class));
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
                 ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED ||
@@ -107,7 +110,7 @@ public class MainActivity extends AppCompatActivity
         }
 
 dis();
-        int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+        int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
 
         // Showing status
         if(status!= ConnectionResult.SUCCESS) { // Google Play Services are not available
@@ -121,14 +124,53 @@ dis();
                 .findFragmentById(map);
         mapFragment.getMapAsync(this);
         getLoaderManager().initLoader(0, null, this);
-        lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        lm = (LocationManager)getSystemService(LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.BROADCAST_SMS) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED){
+
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.BROADCAST_SMS,
+                    android.Manifest.permission.SEND_SMS,
+                    android.Manifest.permission.RECEIVE_SMS,
+                    android.Manifest.permission.READ_SMS,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                    android.Manifest.permission.READ_CONTACTS}, 10);
+
+        }
+
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, new MyLocationListener());
         mmaudio = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
         maudio = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
 
 
 
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.BROADCAST_SMS) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED){
 
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.BROADCAST_SMS,
+                    android.Manifest.permission.SEND_SMS,
+                    android.Manifest.permission.RECEIVE_SMS,
+                    android.Manifest.permission.READ_SMS,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                    android.Manifest.permission.READ_CONTACTS}, 10);
+
+        }
+        IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+
+        powerReceiver = new PowerReceiver();
+        registerReceiver(powerReceiver, filter);
 
 
 
@@ -255,13 +297,13 @@ dis();
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.BROADCAST_SMS) != PackageManager.PERMISSION_GRANTED ||
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED){
 
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
+         /*   ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
                     android.Manifest.permission.BROADCAST_SMS,
                     android.Manifest.permission.SEND_SMS,
                     android.Manifest.permission.RECEIVE_SMS,
                     android.Manifest.permission.READ_SMS,
                     android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                    android.Manifest.permission.READ_CONTACTS}, 10);
+                    android.Manifest.permission.READ_CONTACTS}, 10); */
         }
         mMap.setMyLocationEnabled(true);
         mMap.setTrafficEnabled(true);
@@ -333,7 +375,7 @@ dis();
 
                 }
                 else{
-                    LocationManager lm;
+
                     MyLocationListener locationListener;
 
                     locationListener = new MyLocationListener();
@@ -456,13 +498,13 @@ dis();
                     ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.BROADCAST_SMS) != PackageManager.PERMISSION_GRANTED ||
                     ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED){
 
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
+              /*  ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
                         android.Manifest.permission.BROADCAST_SMS,
                         android.Manifest.permission.SEND_SMS,
                         android.Manifest.permission.RECEIVE_SMS,
                         android.Manifest.permission.READ_SMS,
                         android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                        android.Manifest.permission.READ_CONTACTS}, 10);
+                        android.Manifest.permission.READ_CONTACTS}, 10);*/
             }           Location lastKnownLocation = lm.getLastKnownLocation(locationProvider);
 
 
@@ -485,7 +527,7 @@ dis();
                 MyLocationListener locationListener;
 
                 locationListener = new MyLocationListener();
-                lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+                lm = (LocationManager)getSystemService(LOCATION_SERVICE);
                 lm.requestLocationUpdates(
                         LocationManager.GPS_PROVIDER,
                         0,
@@ -575,7 +617,7 @@ dis();
 
 
         @Override
-        public void onLocationChanged(final Location location) {
+        public void onLocationChanged(Location location) {
             // TODO Auto-generated method stub
 
 
@@ -591,10 +633,10 @@ dis();
 
                 }
             }
-            else
-            {
-                Toast.makeText(getApplicationContext(),"Unable to get your location",Toast.LENGTH_SHORT).show();
-            }
+                else{
+                Toast.makeText(getApplicationContext(),"Unable to get your location. Please try moving around.",Toast.LENGTH_SHORT).show();
+                }
+
 
             getLoaderManager().restartLoader(0, null,MainActivity.this);
 
@@ -759,6 +801,7 @@ dis();
 
         boolean gps_enabled = false;
         boolean network_enabled = false;
+        lm = (LocationManager)getSystemService(LOCATION_SERVICE);
 
         try {
             gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -793,4 +836,15 @@ dis();
         }}
 
 
-}
+    @Override
+    protected void onDestroy()
+    {
+        if (powerReceiver != null)
+        {
+            unregisterReceiver(powerReceiver);
+            powerReceiver = null;
+        }
+        super.onDestroy();
+    }
+
+    }

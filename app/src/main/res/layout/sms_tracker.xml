@@ -4,7 +4,8 @@
     android:background="#ffff"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/Sms_Tracker">
+    android:id="@+id/Sms_Tracker"
+    android:clickable="true">
 
 
     <Button

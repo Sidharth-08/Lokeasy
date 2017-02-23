@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import static android.support.v4.app.ActivityCompat.requestPermissions;
+
 /**
  * Created by Sidharth on 08-Feb-17.
  */
@@ -37,7 +39,7 @@ public class PowerReceiver extends BroadcastReceiver
     String yourAddress ;
     String yourCity ;
     String yourCountry ;
-
+    MainActivity main=new MainActivity();
     public PowerReceiver ()
     {
 
@@ -46,6 +48,7 @@ public class PowerReceiver extends BroadcastReceiver
     @Override
     public void onReceive(Context context, Intent intent)
     {
+
         if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF))
         {
             Log.e("In on receive", "In Method:  ACTION_SCREEN_OFF");
@@ -54,25 +57,36 @@ public class PowerReceiver extends BroadcastReceiver
         else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON))
         {
             Log.e("In on receive", "In Method:  ACTION_SCREEN_ON");
+            countPowerOff++;
         }
-        else if(intent.getAction().equals(Intent.ACTION_USER_PRESENT))
-        {
-            Log.e("In on receive", "In Method:  ACTION_USER_PRESENT");
+
+
             if (countPowerOff > 2)
             {
                 countPowerOff=0;
 
                 LocationListener locationListener = new MyLocationListener();
                 lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
-                if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
+
+                if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                        ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                        ActivityCompat.checkSelfPermission(context, android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED ||
+                        ActivityCompat.checkSelfPermission(context, android.Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED ||
+                        ActivityCompat.checkSelfPermission(context, android.Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED ||
+                        ActivityCompat.checkSelfPermission(context, android.Manifest.permission.BROADCAST_SMS) != PackageManager.PERMISSION_GRANTED ||
+                        ActivityCompat.checkSelfPermission(context, android.Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED){
+/*
+                    requestPermissions(main, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
+                            android.Manifest.permission.BROADCAST_SMS,
+                            android.Manifest.permission.SEND_SMS,
+                            android.Manifest.permission.RECEIVE_SMS,
+                            android.Manifest.permission.READ_SMS,
+                            android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                            android.Manifest.permission.READ_CONTACTS,
+                    }, 10); */
                 }
+
+
                 lm.requestLocationUpdates(
                         LocationManager.NETWORK_PROVIDER,
                         60000,
@@ -149,6 +163,7 @@ public class PowerReceiver extends BroadcastReceiver
 
                 if (c.moveToFirst()) {
                     do {
+
                         SmsManager sms = SmsManager.getDefault();
                         String num=c.getString(c.getColumnIndex(EmergencyContact.NUMBER));
 
@@ -180,7 +195,7 @@ public class PowerReceiver extends BroadcastReceiver
 
 
             }
-        }
+
     }
     private CountDownTimer timer = new CountDownTimer(2000, 1000) {
         @Override

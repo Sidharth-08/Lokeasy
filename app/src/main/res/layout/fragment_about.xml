@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffff">
+    android:background="#ffff"
+    android:clickable="true">
 
     <TextView
         android:text="At Lokeasy, We are a group of enthusiastic developers experimenting with android development. Here, we have a key that if sent in a message will send the device's location to the message sender. and whenever the device enters in a parameter of a marker, the phone will be put in vibrate mode, and on pressing the power button thrice your location will be sent to emergency contacts. "

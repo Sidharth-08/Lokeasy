@@ -4,6 +4,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:id="@+id/fadePopup"
-        android:background="#AA000000">
+        android:background="#AA000000"
+        android:clickable="true">
     </LinearLayout>
 
