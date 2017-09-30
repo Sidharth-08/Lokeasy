@@ -1,6 +1,6 @@
 # Lokeasy
 
-[App available on playstore](https://play.google.com/store/apps/details?id=cardview.com.lokeasy&hl=en)
+[Android Application available on playstore](https://play.google.com/store/apps/details?id=cardview.com.lokeasy&hl=en)
 
 
 Lokeasy provides the user with three utilities to help them with their day to day tasks.
