@@ -10,3 +10,5 @@ Lokeasy provides the user with three utilities to help them with their day to da
 *Position detection* enables the user to mark certain places as per his/her choice as important places and on reaching within a certain proximity of these places the user's phone will turn into silent mode and when the user leaves the place the phone will be back to normal.
 
 User can also choose to press power button thrice to send an *SOS* to the selected emergency contacts.
+
+Note: The application was made before the release of Kotlin so all of the android application is in Java.
