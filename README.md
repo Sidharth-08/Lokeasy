@@ -11,4 +11,4 @@ Lokeasy provides the user with three utilities to help them with their day to da
 
 User can also choose to press power button thrice to send an *SOS* to the selected emergency contacts.
 
-Note: The application was made before the release of Kotlin so all of the android application is in Java.
+_Note: The application was made before the release of Kotlin so all of the android application is in Java._
